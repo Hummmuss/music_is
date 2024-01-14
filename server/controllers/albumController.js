@@ -1,25 +1,40 @@
-const {Album} = require ("../models")
-const uuid = require('uuid')
-const path = require("path");
+const albumService = require ("../services/albumService")
+const ApiError = require("../error/ApiError");
 
 class albumController {
-    async create(req, res) {
-        const {name, year, artistID} = req.body
-        const {image} = req.files
-        let fileName = uuid.v4() + '.jpg'
-        image.mv(path.resolve(__dirname, '..', 'albumCovers',  fileName))
-        const album = await Album.create({name, year, artistID, image: fileName})
-        return res.json(album)
+    async create(req, res, next) {
+        try {
+            const {name, year, artistID} = req.body
+            const {image} = req.files
+            const album = await albumService.createAlbum({name, year, artistID, image})
+            return res.json(album)
+        }
+        catch (error) {
+            console.error(error);
+            return next(ApiError.internal("Internal error"))
+        }
     }
-    async getAll(req, res) {
-        const albums = await Album.findAll()
-        return res.json(albums)
+    async getAll(req, res, next) {
+        try {
+            const albums = await albumService.getAllAlbums()
+            return res.json(albums)
+        }
+        catch (error) {
+            console.error(error);
+            return next(ApiError.internal(("Internal errol")))
+        }
     }
 
-    async getOne(req, res) {
-        const {id} = req.params
-        const album = await Album.findOne({where: {id}})
-        return res.json(album)
+    async getOne(req, res, next) {
+        try {
+            const {id} = req.params
+            const album = await albumService.getOneAlbum({id})
+            return res.json(album)
+        }
+        catch(error) {
+            console.error(error);
+            return next(ApiError.internal(("Internal errol")))
+        }
     }
 }
 

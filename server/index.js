@@ -7,8 +7,19 @@ const fileUpload = require('express-fileupload')
 const path = require('path')
 const router = require('./routes/index')
 const PORT = process.env.PORT || 5000;
-
+const swaggerUi = require('swagger-ui-express');
+const bodyParser = require('body-parser');
 const app = express();
+
+const swaggerSpec = require('./swagger-output.json')
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Добавление bodyParser для обработки файлов
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'static')));

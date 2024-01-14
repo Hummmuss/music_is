@@ -1,25 +1,40 @@
 const {Track} = require ("../models")
 const uuid = require ("uuid")
 const path = require("path");
+const trackService = require("../services/trackService")
+const ApiError = require("../error/ApiError");
 
 class trackController {
-    async create(req, res) {
-        const {genreID, artistID, albumID, name, duration} = req.body
-        const {fileName} = req.files
-        let fileStorageName = uuid.v4() + '.mp3'
-        fileName.mv(path.resolve(__dirname, '..', 'MP3Tracks',  fileStorageName))
-        const track = await Track.create({genreID, artistID, albumID, name, duration, fileName: fileStorageName})
-        return res.json(track)
+    async create(req, res, next) {
+        try {
+            const {genreID, artistID, albumID, name, duration} = req.body
+            const {fileName} = req.files
+            const track = await trackService.createTrack({genreID, artistID, albumID, name, duration, fileName})
+            return res.json(track)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
-    async getAll(req, res) {
-        const tracks = await Track.findAll()
-        return res.json(tracks)
+    async getAll(req, res, next) {
+        try {
+            const tracks = await trackService.getAllTrack()
+            return res.json(tracks)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
 
-    async getOne(req, res) {
-        const {id} = req.params
-        const track = await Track.findOne({where: {id}})
-        return res.json(track)
+    async getOne(req, res, next) {
+        try {
+            const {id} = req.params
+            const track = await trackService.getOneTrack({id})
+            return res.json(track)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
 
 }

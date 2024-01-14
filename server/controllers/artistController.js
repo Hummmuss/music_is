@@ -1,20 +1,28 @@
-const {Artist} = require ("../models")
-const uuid = require('uuid')
-const path = require("path");
+const artistService = require("../services/artistService");
+const ApiError = require("../error/ApiError");
 
-class artistController {
-    async create(req, res) {
-        const {name} = req.body
-        const {image} = req.files
-        let fileName = uuid.v4() + '.jpg'
-        image.mv(path.resolve(__dirname, '..', 'artistPhotos',  fileName))
-        const artist = await Artist.create({name, image: fileName})
-        return res.json(artist)
+class ArtistController {
+    async create(req, res, next) {
+        try {
+            const { name } = req.body;
+            const { image } = req.files;
+            const artist = await artistService.createArtist({ name, image });
+            return res.json(artist);
+        } catch (error) {
+            console.error(error);
+            return next(ApiError.internal(('Internal error')));
+        }
     }
-    async getAll(req, res) {
-        const artists = await Artist.findAll()
-        return res.json(artists)
+
+    async getAll(req, res, next) {
+        try {
+            const artists = await artistService.getAllArtists();
+            return res.json(artists);
+        } catch (error) {
+            console.error(error);
+            return next(ApiError.internal(('Internal error')));
+        }
     }
 }
 
-module.exports = new artistController()
+module.exports = new ArtistController();

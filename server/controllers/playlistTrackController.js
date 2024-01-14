@@ -1,20 +1,36 @@
-const {PlaylistTrack, Album} = require ("../models")
+const playlistTrackService = require("../services/playlistTrackService")
+const ApiError = require("../error/ApiError");
 
 class playlistTrackController {
-    async create(req, res) {
-        const {trackID, playlistID} = req.body
-        const playlistTrack = await PlaylistTrack.create({trackID, playlistID})
-        return res.json(playlistTrack)
+    async create(req, res, next) {
+        try {
+            const {trackID, playlistID} = req.body
+            const playlistTrack = await playlistTrackService.createPlaylistTrack({trackID, playlistID})
+            return res.json(playlistTrack)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
-    async getAll(req, res) {
-        const playlistTracks = await PlaylistTrack.findAll()
-        return res.json(playlistTracks)
+    async getAll(req, res, next) {
+        try {
+            const playlistTracks = await playlistTrackService.getAllPlaylistTrack()
+            return res.json(playlistTracks)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
 
-    async delete(req, res) {
-        const {id} = req.params
-        const playlistTrack = await PlaylistTrack.destroy({where: {id}})
-        return res.json(playlistTrack)
+    async delete(req, res, next) {
+        try {
+            const {id} = req.params
+            const playlistTrack = await playlistTrackService.deletePlaylistTrack({id})
+            return res.json(playlistTrack)
+        }
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
     }
 }
 
