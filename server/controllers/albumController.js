@@ -36,6 +36,7 @@ class albumController {
             return next(ApiError.internal(("Internal errol")))
         }
     }
+
 }
 
 module.exports = new albumController()

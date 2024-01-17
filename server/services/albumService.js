@@ -18,6 +18,7 @@ class albumService {
         const album = await Album.findOne({where: {id}})
         return album
     }
+
 }
 
 module.exports = new albumService

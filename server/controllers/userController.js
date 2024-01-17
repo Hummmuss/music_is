@@ -16,43 +16,55 @@ class userController {
     async registration(req, res, next) {
         const {username, email, password} = req.body
         if (!email) {
-            return next(ApiError.badRequest(('Enter email!')))
+            return {
+                success: false,
+                message: 'NO EMAIL',
+            };
         }
         if (!password) {
-            return next(ApiError.badRequest(('Enter password!')))
+            return {
+                success: false,
+                message: 'NO PASSWORD',
+            };
         }
 
-        const token = await userService.registration({username, email, password})
-        return res.json({token})
+        const result = await userService.registration({username, email, password})
+        return res.json({result})
     }
 
     async login(req, res, next) {
         const {email, password} = req.body
         if (!email) {
-            return next(ApiError.badRequest(('Enter email!')))
+            return {
+                success: false,
+                message: 'NO EMAIL',
+            };
         }
         if (!password) {
-            return next(ApiError.badRequest(('Enter password!')))
+            return {
+                success: false,
+                message: 'NO PASSWORD',
+            };
         }
-        const token = await userService.login({email, password})
-        return res.json({token})
+        const result = await userService.login({email, password})
+        return res.json({result})
     }
 
     async getOne (req, res) {
         const {id} = req.params
-        const user = await userService.getOneUser({id})
-        return res.json(user)
+        const result = await userService.getOneUser({id})
+        return res.json({result})
     }
     async updateOne(req, res, next) {
         const { id } = req.params;
         const {newUsername} = req.body
-        const message = await userService.updateOneUser({id, newUsername})
-        return res.json({message})
+        const result = await userService.updateOneUser({id, newUsername})
+        return res.json({result})
     }
     async delete (req, res) {
         const {id} = req.params
-        const message = await userService.deleteUser({id})
-        return res.json({message})
+        const result = await userService.deleteUser({id})
+        return res.json({result})
     }
 }
 

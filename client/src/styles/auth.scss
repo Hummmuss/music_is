@@ -1,0 +1,32 @@
+@import "./variables";
+
+.wrapper {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #efeded;
+
+  .card {
+    height: 30vh;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      color: $primary-orange;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .button {
+      background: $primary-blue;
+      margin-top: 20px;
+      width: 100%;
+
+      &:hover {
+        background: #368796;
+      }
+    }
+  }
+}
+

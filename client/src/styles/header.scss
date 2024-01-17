@@ -1,0 +1,58 @@
+@import "./variables";
+
+.header {
+  width: 100vw;
+  background-color: $primary-red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .playlists-space {
+    width: 80%;
+    height: 50px;
+    margin-left: 5%;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+  .item {
+    font-family: 'Quicksand', sans-serif;
+    color: $complementary-orange;
+    margin-right: 30px;
+    white-space: nowrap;
+
+    &:hover {
+      transform: skew(-10deg);
+      color: $primary-orange
+    }
+    }
+  }
+
+  .auth {
+    text-decoration: none;
+    font-family: 'Quicksand', sans-serif;
+    color: $primary-orange;
+    margin: 0 5% 0 0;
+
+    &:hover {
+      transform: skew(-10deg);
+    }
+  }
+}
+
+.playlists-space::-webkit-scrollbar {
+  height: 5px;
+}
+
+.playlists-space::-webkit-scrollbar-track {
+  background-color: rgba(228, 228, 228, 0);
+  border-radius: 100px;
+}
+
+.playlists-space::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border-left: 0;
+  border-right: 0;
+  background-color: $primary-orange;
+}

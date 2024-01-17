@@ -10,7 +10,7 @@ class playlistService {
         return playlists
     }
 
-    async deletePlaylist(id) {
+    async deletePlaylist({id}) {
         const playlist = await Playlist.destroy({where: {id}})
         return playlist
     }
