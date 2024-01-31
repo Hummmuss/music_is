@@ -1,0 +1,43 @@
+@import "./variables";
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-black;
+
+  .options {
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    line-height: 40px;
+
+    .change-username {
+      cursor: pointer;
+      color: $complementary-orange;
+      &:hover {
+        cursor: pointer;
+        transform: skew(-10deg);
+      }
+    }
+
+    .delete-account {
+      cursor: pointer;
+      color: #e55b5b;
+      &:hover {
+        cursor: pointer;
+        transform: skew(-10deg);
+      }
+    }
+
+    .log-out {
+      cursor: pointer;
+      color: #d98155;
+      &:hover {
+        cursor: pointer;
+        transform: skew(-10deg);
+      }
+    }
+  }
+}

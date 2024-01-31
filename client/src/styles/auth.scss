@@ -1,14 +1,14 @@
 @import "./variables";
 
 .wrapper {
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #efeded;
+  background-color: $primary-black;
 
   .card {
-    height: 30vh;
+    height: 50vh;
     width: 30vw;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,8 @@
 
     h1 {
       color: $primary-orange;
-      font-family: 'Quicksand', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
+      white-space: nowrap;
     }
     .button {
       background: $primary-blue;

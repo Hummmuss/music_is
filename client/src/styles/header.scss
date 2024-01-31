@@ -1,8 +1,8 @@
 @import "./variables";
 
 .header {
-  width: 100vw;
-  background-color: $primary-red;
+  width: 100%;
+  background-color: $primary-black;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,6 +23,7 @@
     white-space: nowrap;
 
     &:hover {
+      cursor: pointer;
       transform: skew(-10deg);
       color: $primary-orange
     }

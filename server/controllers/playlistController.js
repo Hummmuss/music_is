@@ -17,7 +17,18 @@ class playlistController {
             const playlists = await playlistService.getAllPlaylists()
             return res.json(playlists)
         }
-        catch(error) {
+        catch (error) {
+            return next(ApiError.internal("Internal error"))
+        }
+    }
+
+    async getAllByUser(req, res, next) {
+        try {
+            const {userID} = req.params
+            const playlists = await playlistService.getPlaylistsByUser({userID})
+            return res.json(playlists)
+        }
+        catch (error) {
             return next(ApiError.internal("Internal error"))
         }
     }

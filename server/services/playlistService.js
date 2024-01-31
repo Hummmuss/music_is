@@ -10,6 +10,11 @@ class playlistService {
         return playlists
     }
 
+    async getPlaylistsByUser({userID}) {
+        const playlists = await Playlist.findAll({where: {userID}})
+        return playlists
+    }
+
     async deletePlaylist({id}) {
         const playlist = await Playlist.destroy({where: {id}})
         return playlist

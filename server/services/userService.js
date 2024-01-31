@@ -13,10 +13,10 @@ const generateJwt = (id, email) => {
 class userService {
     async registration({username, email, password}) {
         const candidate = await User.findOne({where: {email}})
-        if (candidate.email === email) {
+        if (candidate) {
             return {
                 success: false,
-                message: 'EMAIL IS ALREADY IN USE',
+                message: 'Email is already in use!',
             };
         }
         const hashPassword = await bcrypt.hash(password, 5)
@@ -34,14 +34,14 @@ class userService {
         if (!user) {
             return {
                 success: false,
-                message: 'USER DOES NOT EXIST',
+                message: 'User does not exist!',
             };
         }
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
             return {
                 success: false,
-                message: 'WRONG PASSWORD',
+                message: 'Wrong password!',
             };
         }
         const token = generateJwt(user.id, user.email)
@@ -63,7 +63,7 @@ class userService {
         if (!user) {
             return {
                 success: false,
-                message: 'USER DOES NOT EXIST',
+                message: 'User does not exist!',
             };
         }
         user.username = newUsername
@@ -71,14 +71,14 @@ class userService {
         await user.save();
         return {
             success: true,
-            message: 'SUCCESS',
+            message: 'Success!',
         };
     }
     async deleteUser ({id}) {
         await User.destroy({where: {id}})
         return {
             success: true,
-            message: 'SUCCESS',
+            message: 'Success!',
         };
     }
 }
