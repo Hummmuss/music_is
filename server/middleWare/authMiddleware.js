@@ -1,21 +1,19 @@
 const jwt = require('jsonwebtoken')
 
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
     if (req.method === "OPTIONS") {
-        next()
+        return next();
     }
     try {
-        const token = req.headers.authorization.split(' ')[1] // Bearer asfasnfkajsfnjk
+        const token = req.headers.authorization.split(' ')[1];
         if (!token) {
-            return "Unauthorized";
-        }
-        else
-        {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY)
-        req.user = decoded
-        next()
+            return res.status(401).json({ message: "Unauthorized" });
+        } else {
+            const decoded = jwt.verify(token, process.env.SECRET_KEY);
+            req.user = decoded;
+            return next();
         }
     } catch (e) {
-        return "Unauthorized"
+        return res.status(401).json({ message: "Unauthorized" });
     }
 };

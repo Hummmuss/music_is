@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react";
 import {BrowserRouter} from "react-router-dom";
 import Header from "./components/Header";
@@ -13,29 +13,39 @@ const App = observer(() => {
     const [isLoading, setIsLoading] = useState(true);
     console.log("rerender!")
 
-    check().then(data => {
-        user.setUserId(data.id);
-        user.setIsAuth(true);
-    }).finally(() => setIsLoading(false))
+    useEffect(() => {
+        setTimeout(() => {
+            check().then(data => {
+                console.log(data)
+                if (data.success === true) {
+                    user.setUserId(data.token.id)
+                    user.setIsAuth(true)
+                } else {
+                    console.log("unauthorized")
+                    user.setIsAuth(false)
+                }
+            }).finally(() => setIsLoading(false))
+        }, 1000)
+    }, [user])
 
-
-    console.log(user.isAuth);
 
     if (isLoading) {
         return (
-            <div className="lds-ripple">
-                <div></div>
-                <div></div>
+            <div className="wrapper">
+                <span className="loader"></span>
             </div>
         );
-    } else {
-        return (
+    }
+    console.log(user.isAuth)
+    return (
+        <div>
             <BrowserRouter>
                 <Header user={user}/>
-                <AppRouter/>
+                <AppRouter user={user}/>
             </BrowserRouter>
-        );
-    }
+        </div>
+    );
+
 });
 
 export default App;

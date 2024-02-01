@@ -13,6 +13,21 @@
     font-size: 20px;
     line-height: 40px;
 
+    .username-input{
+      width: 110%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      .ok {
+        color: $complementary-orange;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
     .change-username {
       cursor: pointer;
       color: $complementary-orange;
