@@ -25,6 +25,7 @@ class userService {
         const token = generateJwt(user.id, user.email)
         return {
             success: true,
+            message: 'Success!',
             token
         };
     }
@@ -47,17 +48,27 @@ class userService {
         const token = generateJwt(user.id, user.email)
         return {
             success: true,
+            message: 'Success!',
             token
         };
     }
 
-    async getOneUser ({id}) {
+    async getOneUser({id}) {
         const user = await User.findOne({where: {id}})
-        return {
-            success: true,
-            user
-        };
+        if (!user) {
+            return {
+                success: false,
+                message: 'User does not exist!',
+            };
+        } else {
+            return {
+                success: true,
+                message: 'Success!',
+                user,
+            };
+        }
     }
+
     async updateOneUser({id, newUsername}) {
         const user = await User.findOne({where: {id}})
         if (!user) {
@@ -74,7 +85,8 @@ class userService {
             message: 'Success!',
         };
     }
-    async deleteUser ({id}) {
+
+    async deleteUser({id}) {
         await User.destroy({where: {id}})
         return {
             success: true,

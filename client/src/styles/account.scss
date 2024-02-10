@@ -14,12 +14,13 @@
     line-height: 40px;
 
     .username-input{
-      width: 110%;
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
 
       .ok {
+        margin-left: 10px;
         color: $complementary-orange;
 
         &:hover {

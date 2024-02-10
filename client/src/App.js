@@ -1,33 +1,27 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {observer} from "mobx-react";
+import React, {useEffect} from 'react';
+import "./styles/main.scss"
+import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 import Header from "./components/Header";
 import AppRouter from "./Router";
-import {check} from "./http/API";
-import {Context} from "./index";
-import "./styles/main.scss"
 
 
-const App = observer(() => {
-    const {user} = useContext(Context);
-    const [isLoading, setIsLoading] = useState(true);
-    console.log("rerender!")
+
+const App = () => {
+    const dispatch = useDispatch();
+
+    const isLoading =  useSelector(state => state.isLoading);
 
     useEffect(() => {
-        setTimeout(() => {
-            check().then(data => {
-                console.log(data)
-                if (data.success === true) {
-                    user.setUserId(data.token.id)
-                    user.setIsAuth(true)
-                } else {
-                    console.log("unauthorized")
-                    user.setIsAuth(false)
-                }
-            }).finally(() => setIsLoading(false))
-        }, 1000)
-    }, [user])
+        const check = () => {
+            dispatch({ type: 'check' });
+        };
 
+        check();
+
+    }, [dispatch]);
+
+    console.log(isLoading);
 
     if (isLoading) {
         return (
@@ -36,16 +30,15 @@ const App = observer(() => {
             </div>
         );
     }
-    console.log(user.isAuth)
+
     return (
         <div>
             <BrowserRouter>
-                <Header user={user}/>
-                <AppRouter user={user}/>
+                <Header/>
+                <AppRouter/>
             </BrowserRouter>
         </div>
     );
-
-});
+};
 
 export default App;

@@ -21,7 +21,7 @@ class albumController {
         }
         catch (error) {
             console.error(error);
-            return next(ApiError.internal(("Internal errol")))
+            return next(ApiError.internal(("Internal error")))
         }
     }
 
@@ -33,7 +33,7 @@ class albumController {
         }
         catch(error) {
             console.error(error);
-            return next(ApiError.internal(("Internal errol")))
+            return next(ApiError.internal(("Internal error")))
         }
     }
 

@@ -10,6 +10,7 @@ export const registration = async (username, email, password) => {
         localStorage.setItem('token', data.token)
         return {
             success: data.success,
+            message: data.message,
             token: jwtDecode(data.token)
         }
     } else {
@@ -28,6 +29,7 @@ export const login = async (email, password) => {
         localStorage.setItem('token', data.token)
         return {
             success: data.success,
+            message: data.message,
             token: jwtDecode(data.token)
         }
     } else {
@@ -56,7 +58,15 @@ export const check = async () => {
 }
 
 export const updateUser = async (newUsername, id) => {
+    console.log("server upd user")
     const {data} = await $authHost.put('api/user/' + id, {newUsername})
+    return data
+}
+
+export const getOneUser = async (id) => {
+    console.log("server get one user")
+    const {data} = await $authHost.get('api/user/' + id)
+    console.log(data)
     return data
 }
 
@@ -75,7 +85,7 @@ export const getAllPlaylists = async () => {
 
 export const getAllPlaylistsByUser = async (userID) => {
     if (userID===null) {return}
-    console.log("server getall pl by user")
+    console.log("server get all pl by user")
     console.log(userID)
     const {data} = await $authHost.get('api/playlist/' + userID)
     console.log(data)
